@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tasks</string>
+    <string name="taskz">Tasks</string>
+    <string name="newtask">New Task</string>
+    <string name="edittask">Edit Task</string>
+    <string name="tskname">Task Title</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="desc">Description</string>
+    <string name="priority">Priority</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
+</resources>
