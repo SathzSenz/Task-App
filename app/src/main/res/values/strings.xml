@@ -11,6 +11,7 @@
     <string name="priority1">Priority : </string>
     <string name="save">Save</string>
     <string name="update">Update</string>
+    <string name="category">Category</string>
     <string-array name="priority_array">
         <item>High</item>
         <item>Medium</item>

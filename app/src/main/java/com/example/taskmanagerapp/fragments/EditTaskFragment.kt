@@ -59,24 +59,44 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
 
         // Inside onViewCreated after setting up other views
         val prioritySpinner: Spinner = binding.updtprioritySpinner
+        val categorySpinner: Spinner = binding.updtcategorySpinner
 
 // Define the list of priority options
         val priorityOptions = listOf("Low", "Medium", "High")
+        val categoryOptions = arrayOf("Personal", "Work", "Travel", "Finance")
 
 // Set up the adapter
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorityOptions)
+        val adapter1 = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
 // Set the adapter to the Spinner
         prioritySpinner.adapter = adapter
+        categorySpinner.adapter = adapter1
 
 // Set the selected priority
         val currentPriority = currentTask.priority
         val selectedIndex = priorityOptions.indexOf(currentPriority)
         prioritySpinner.setSelection(selectedIndex)
 
+        val currentCategory = currentTask.category
+        val selectedIndex1 = categoryOptions.indexOf(currentCategory)
+        categorySpinner.setSelection(selectedIndex1)
+
 // Listen for item selection events if needed
         prioritySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedPriority = priorityOptions[position]
+                // Handle the selected priority as needed
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle case where nothing is selected
+            }
+        }
+
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedPriority = priorityOptions[position]
                 // Handle the selected priority as needed
@@ -92,6 +112,7 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
         binding.updatedate.setText(currentTask.date)
         binding.updatedescription.setText(currentTask.description)
         binding.updtprioritySpinner.setSelection(priorityOptions.indexOf(currentTask.priority))
+        binding.updtcategorySpinner.setSelection(categoryOptions.indexOf(currentTask.category))
 
         binding.updatedate.setOnClickListener {
             showDatePicker()
@@ -107,9 +128,10 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
             val date = binding.updatedate.text.toString().trim()
             val time = binding.updatetime.text.toString().trim()
             val priority = binding.updtprioritySpinner.selectedItem.toString().trim()
+            val category = binding.updtcategorySpinner.selectedItem.toString().trim()
 
             if(title.isNotEmpty()){
-                val task = Task(currentTask.id, title, description, date, time, priority)
+                val task = Task(currentTask.id, title, description, date, time, priority, category)
                 tasksViewModel.updateTask(task)
                 view.findNavController().popBackStack(R.id.homeFragment, false)
             }else {

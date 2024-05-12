@@ -52,14 +52,19 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
         addTaskView = view
 
         val prioritySpinner: Spinner = view.findViewById(R.id.prioritySpinner)
+        val categorySpinner: Spinner = view.findViewById(R.id.categorySpinner)
 
         val priorityOptions = arrayOf("High", "Medium", "Low")
+        val categoryOptions = arrayOf("Personal", "Work", "Travel", "Finance")
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorityOptions)
+        val adapter1 = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryOptions)
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         prioritySpinner.adapter = adapter
+        categorySpinner.adapter = adapter1
 
         binding.date.setOnClickListener{
             showDatePicker()
@@ -111,9 +116,10 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
         val time = binding.time.text.toString().trim()
         val date = binding.date.text.toString().trim()
         val priority = binding.prioritySpinner.selectedItem.toString().trim()
+        val category = binding.categorySpinner.selectedItem.toString().trim()
 
         if(title.isNotEmpty()){
-            val task = Task(0, title, description, date, time, priority)
+            val task = Task(0, title, description, date, time, priority, category)
             tasksViewModel.addTask(task)
 
             Toast.makeText(addTaskView.context, "Task Added", Toast.LENGTH_SHORT).show()
