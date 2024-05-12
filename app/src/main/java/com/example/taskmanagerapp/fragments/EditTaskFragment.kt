@@ -9,6 +9,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -51,18 +54,48 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
         tasksViewModel = (activity as MainActivity).taskViewModel
         currentTask = args.task!!
 
+        // Inside onViewCreated after setting up other views
+        val prioritySpinner: Spinner = binding.updtprioritySpinner
+
+// Define the list of priority options
+        val priorityOptions = listOf("Low", "Medium", "High")
+
+// Set up the adapter
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorityOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+// Set the adapter to the Spinner
+        prioritySpinner.adapter = adapter
+
+// Set the selected priority
+        val currentPriority = currentTask.priority
+        val selectedIndex = priorityOptions.indexOf(currentPriority)
+        prioritySpinner.setSelection(selectedIndex)
+
+// Listen for item selection events if needed
+        prioritySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedPriority = priorityOptions[position]
+                // Handle the selected priority as needed
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle case where nothing is selected
+            }
+        }
+
         binding.updatetaskname.setText(currentTask.title)
         binding.updatetime.setText(currentTask.time)
         binding.updatedate.setText(currentTask.date)
         binding.updatedescription.setText(currentTask.description)
-        binding.updatepriority.setText(currentTask.priority)
+        binding.updtprioritySpinner.setSelection(priorityOptions.indexOf(currentTask.priority))
 
         binding.updatebttn.setOnClickListener{
             val title = binding.updatetaskname.text.toString().trim()
             val description = binding.updatedescription.text.toString().trim()
             val date = binding.updatedate.text.toString().trim()
             val time = binding.updatetime.text.toString().trim()
-            val priority = binding.updatepriority.text.toString().trim()
+            val priority = binding.updtprioritySpinner.selectedItem.toString().trim()
 
             if(title.isNotEmpty()){
                 val task = Task(currentTask.id, title, description, date, time, priority)

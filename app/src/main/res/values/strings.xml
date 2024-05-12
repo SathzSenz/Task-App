@@ -8,6 +8,7 @@
     <string name="date">Date</string>
     <string name="desc">Description</string>
     <string name="priority">Priority</string>
+    <string name="priority1">Priority : </string>
     <string name="save">Save</string>
     <string name="update">Update</string>
     <string-array name="priority_array">

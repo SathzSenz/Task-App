@@ -8,6 +8,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -45,6 +47,17 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
 
         tasksViewModel = (activity as MainActivity).taskViewModel
         addTaskView = view
+
+        val prioritySpinner: Spinner = view.findViewById(R.id.prioritySpinner)
+
+        val priorityOptions = arrayOf("High", "Medium", "Low")
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorityOptions)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        prioritySpinner.adapter = adapter
+
     }
 
     private fun saveTask(view: View){
@@ -52,7 +65,7 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
         val description = binding.description.text.toString().trim()
         val time = binding.time.text.toString().trim()
         val date = binding.date.text.toString().trim()
-        val priority = binding.priority.text.toString().trim()
+        val priority = binding.prioritySpinner.selectedItem.toString().trim()
 
         if(title.isNotEmpty()){
             val task = Task(0, title, description, time, date, priority)

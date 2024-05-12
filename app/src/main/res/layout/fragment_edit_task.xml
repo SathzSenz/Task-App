@@ -159,16 +159,12 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/updatepriority"
+                <Spinner
+                    android:id="@+id/updtprioritySpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Priority"
-                    android:inputType="text"
-                    android:textSize="24sp" />
+                    android:layout_weight="1"/>
 
             </LinearLayout>
         </ScrollView>
