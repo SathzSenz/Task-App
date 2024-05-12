@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tasks</string>
+    <string name="app_name">Ez Taskz</string>
     <string name="taskz">Tasks</string>
     <string name="newtask">New Task</string>
     <string name="edittask">Edit Task</string>

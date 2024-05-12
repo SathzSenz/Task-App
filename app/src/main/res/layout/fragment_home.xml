@@ -33,12 +33,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/emptyNotesImage"
             android:visibility="gone"
-            android:src="@drawable/mmkay"/>
+            android:text="Empty......."
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

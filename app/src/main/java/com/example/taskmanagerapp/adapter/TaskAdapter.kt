@@ -47,6 +47,7 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
         holder.itemBinding.descTextView.text = currentTask.description
         holder.itemBinding.priorityTextView.text = currentTask.priority
         holder.itemBinding.deadlineTextView.text = currentTask.date
+        holder.itemBinding.categoryTextView.text = currentTask.category
 
         holder.itemView.setOnClickListener{
             val direction = HomeFragmentDirections.actionHomeFragmentToEditTaskFragment(currentTask)

@@ -63,7 +63,7 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
 
 // Define the list of priority options
         val priorityOptions = listOf("Low", "Medium", "High")
-        val categoryOptions = arrayOf("Personal", "Work", "Travel", "Finance")
+        val categoryOptions = arrayOf("Personal", "Work", "Travel", "Financial")
 
 // Set up the adapter
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorityOptions)
@@ -98,7 +98,7 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
 
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedPriority = priorityOptions[position]
+                val selectedPriority = categoryOptions[position]
                 // Handle the selected priority as needed
             }
 

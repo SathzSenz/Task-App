@@ -55,7 +55,7 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
         val categorySpinner: Spinner = view.findViewById(R.id.categorySpinner)
 
         val priorityOptions = arrayOf("High", "Medium", "Low")
-        val categoryOptions = arrayOf("Personal", "Work", "Travel", "Finance")
+        val categoryOptions = arrayOf("Personal", "Work", "Travel", "Financial")
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorityOptions)
         val adapter1 = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryOptions)
@@ -118,14 +118,14 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
         val priority = binding.prioritySpinner.selectedItem.toString().trim()
         val category = binding.categorySpinner.selectedItem.toString().trim()
 
-        if(title.isNotEmpty()){
+        if(title.isNotEmpty() && date.isNotEmpty()){
             val task = Task(0, title, description, date, time, priority, category)
             tasksViewModel.addTask(task)
 
             Toast.makeText(addTaskView.context, "Task Added", Toast.LENGTH_SHORT).show()
             view.findNavController().popBackStack(R.id.homeFragment, false)
         } else {
-            Toast.makeText(addTaskView.context, "Please Enter Task Title", Toast.LENGTH_SHORT).show()
+            Toast.makeText(addTaskView.context, "Please Enter Task Title/ Date", Toast.LENGTH_SHORT).show()
         }
     }
 
