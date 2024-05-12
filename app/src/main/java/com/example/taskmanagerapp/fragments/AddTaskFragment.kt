@@ -1,5 +1,7 @@
 package com.example.taskmanagerapp.fragments
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import com.example.taskmanagerapp.R
 import com.example.taskmanagerapp.databinding.FragmentAddTaskBinding
 import com.example.taskmanagerapp.model.Task
 import com.example.taskmanagerapp.viewmodel.TaskViewModel
+import java.util.Calendar
 
 
 class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
@@ -58,6 +61,48 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
 
         prioritySpinner.adapter = adapter
 
+        binding.date.setOnClickListener{
+            showDatePicker()
+        }
+
+        binding.time.setOnClickListener{
+            showTimePicker()
+        }
+
+    }
+
+    private fun showDatePicker() {
+        val calender = Calendar.getInstance()
+        val year = calender.get(Calendar.YEAR)
+        val month = calender.get(Calendar.MONTH)
+        val day = calender.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(),
+            {_, year, month, dayOfMonth ->
+                val selectedDate = "${dayOfMonth}/${month + 1}/${year}"
+                binding.date.setText(selectedDate)
+            }, year, month, day)
+
+        datePickerDialog.show()
+    }
+
+    private fun showTimePicker() {
+        val currentTime = Calendar.getInstance()
+        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+        val minute = currentTime.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            { _, selectedHour, selectedMinute ->
+                val selectedTime = "$selectedHour:$selectedMinute"
+                binding.time.setText(selectedTime)
+            },
+            hour,
+            minute,
+            true
+        )
+
+        timePickerDialog.show()
     }
 
     private fun saveTask(view: View){
@@ -68,7 +113,7 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
         val priority = binding.prioritySpinner.selectedItem.toString().trim()
 
         if(title.isNotEmpty()){
-            val task = Task(0, title, description, time, date, priority)
+            val task = Task(0, title, description, date, time, priority)
             tasksViewModel.addTask(task)
 
             Toast.makeText(addTaskView.context, "Task Added", Toast.LENGTH_SHORT).show()

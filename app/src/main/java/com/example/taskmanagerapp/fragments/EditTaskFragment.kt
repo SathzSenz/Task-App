@@ -1,6 +1,9 @@
 package com.example.taskmanagerapp.fragments
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -90,6 +93,14 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
         binding.updatedescription.setText(currentTask.description)
         binding.updtprioritySpinner.setSelection(priorityOptions.indexOf(currentTask.priority))
 
+        binding.updatedate.setOnClickListener {
+            showDatePicker()
+        }
+
+        binding.updatetime.setOnClickListener{
+            showTimePicker()
+        }
+
         binding.updatebttn.setOnClickListener{
             val title = binding.updatetaskname.text.toString().trim()
             val description = binding.updatedescription.text.toString().trim()
@@ -106,6 +117,40 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
             }
 
         }
+    }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(),
+            { _, year, month, dayOfMonth ->
+                val selectedDate = "${dayOfMonth}/${month + 1}/${year}"
+                binding.updatedate.setText(selectedDate)
+            }, year, month, day)
+
+        datePickerDialog.show()
+    }
+
+    private fun showTimePicker() {
+        val currentTime = java.util.Calendar.getInstance()
+        val hour = currentTime.get(java.util.Calendar.HOUR_OF_DAY)
+        val minute = currentTime.get(java.util.Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            { _, selectedHour, selectedMinute ->
+                val selectedTime = "$selectedHour:$selectedMinute"
+                binding.updatetime.setText(selectedTime)
+            },
+            hour,
+            minute,
+            true
+        )
+
+        timePickerDialog.show()
     }
 
     private fun deleteTask() {
